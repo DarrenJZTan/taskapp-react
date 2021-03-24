@@ -7,17 +7,17 @@ const FormInput = ({
   title,
   value,
   setState,
+  setValidation
 }) => {
-  const [isValid, setIsValid] = useState(false);
   const [classNames, setClassNames] = useState('form-control rounded-pill');
 
   const handleChange = (e) => {
     setState(e.target.value);
     if(e.target.value.length > 2) {
-      setIsValid(true)
+      setValidation(true)
       setClassNames('form-control rounded-pill is-valid') 
     } else {
-      setIsValid(false)
+      setValidation(false)
       setClassNames('form-control rounded-pill is-invalid') 
     }
   };
@@ -39,11 +39,9 @@ const FormInput = ({
         value={value}
         onChange={handleChange}
       />
-      {isValid ? (
-        <div className="valid-feedback"></div>
-      ) : (
-        <div style={{marginLeft: '5px'}}className="invalid-feedback">Input must be more than 2 characters long.</div>
-      )}
+      <div className="valid-feedback"></div>
+      <div style={{marginLeft: '5px'}}className="invalid-feedback">Input must be more than 2 characters long.</div>
+      
     </div>
   );
 };

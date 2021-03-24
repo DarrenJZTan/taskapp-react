@@ -1,17 +1,16 @@
 import React, {useState} from 'react';
 
-const FormTextArea = ({placeholder, label, title, value, setState}) => {
+const FormTextArea = ({placeholder, label, title, value, setState, setValidation}) => {
 
-  const [isValid, setIsValid] = useState(false);
   const [classNames, setClassNames] = useState('form-control');
 
   const handleChange = (e) => {
     setState(e.target.value);
     if(e.target.value.length > 2) {
-      setIsValid(true)
+      setValidation(true)
       setClassNames('form-control is-valid') 
     } else {
-      setIsValid(false)
+      setValidation(false)
       setClassNames('form-control is-invalid') 
     }
   };
@@ -21,7 +20,8 @@ const FormTextArea = ({placeholder, label, title, value, setState}) => {
       <label for={label} className="form-label fw-bold">{title}: </label>
         <br />
         <textarea className={classNames} rows="3" placeholder={placeholder} value={value} onChange={handleChange}></textarea>
-        {isValid ? <div className="valid-feedback"></div> : <div style={{marginLeft: '5px'}}className="invalid-feedback">Input must be more than 2 characters long.</div>}
+        <div className="valid-feedback"></div>
+      <div style={{marginLeft: '5px'}}className="invalid-feedback">Input must be more than 2 characters long.</div>
     </div>
   )
 }

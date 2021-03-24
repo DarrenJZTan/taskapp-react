@@ -12,13 +12,35 @@ const Form = ({ setTasks }) => {
   const [status, setStatus] = useState("Choose Status");
   const [dueDate, setDueDate] = useState("");
   const [description, setDescription] = useState("");
+  const [taskNameValidation, setTaskNameValidation] = useState(false);
+  const [assignedToValidation, setAssignedToValidation] = useState(false);
+  const [statusValidation, setStatusValidation] = useState(false);
+  const [dueDateValidation, setDueDateValidation] = useState(false);
+  const [descriptionValidation, setDescriptionValidation] = useState(false);
+  
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log()
     // if (FormInput.isValid)
     //Check all is valid
-    
+    if(!taskNameValidation && !assignedToValidation && !statusValidation && !dueDateValidation && !descriptionValidation) {
+      return
+      
+    } else {
+      setTasks((prev)=> [...prev, {taskName: taskName, assignedTo: assignedTo, status: status, dueDate: dueDate, description: description}]
+      );
+      setTaskName("");
+      setAssignedTo("");
+      setStatus("Choose Status");
+      setDueDate("");
+      setDescription("");
+      setTaskNameValidation(false);
+      setAssignedToValidation(false);
+      setStatusValidation(false);
+      setDueDateValidation(false);
+      setDescriptionValidation(false);
+    }
     //add current task to tasks state
 
     //reset form field state
@@ -41,6 +63,7 @@ const Form = ({ setTasks }) => {
               title="Task Name"
               value={taskName}
               setState={setTaskName}
+              setValidation={setTaskNameValidation}
               
             />
             <FormInput
@@ -50,13 +73,14 @@ const Form = ({ setTasks }) => {
               title="Assigned To"
               value={assignedTo}
               setState={setAssignedTo}
+              setValidation={setAssignedToValidation}
             />
           </div>
           <div className="row">
             <FormSelect
               label="Status"
               title="Status"
-              
+              setValidation={setStatusValidation}
               value={status}
               setState={setStatus}
             />
@@ -64,7 +88,7 @@ const Form = ({ setTasks }) => {
               label="date"
               inputType="date"
               title="Due Date"
-              
+              setValidation={setDueDateValidation}
               value={dueDate}
               setState={setDueDate}
             />
@@ -74,7 +98,7 @@ const Form = ({ setTasks }) => {
               placeholder="Task Description"
               label="description"
               title="Description"
-              
+              setValidation={setDescriptionValidation}
               value={description}
               setState={setDescription}
             />

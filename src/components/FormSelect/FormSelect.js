@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
 
-const FormSelect = ({ label, title, value, setState }) => {
-  const [isValid, setIsValid] = useState(false);
+const FormSelect = ({ label, title, value, setState, setValidation }) => {
   const [classNames, setClassNames] = useState('form-control rounded-pill');
 
   const handleChange = (e) => {
     setState(e.target.value);
     if(e.target.value === 'Choose Status') {
-      setIsValid(false)
+      setValidation(false)
       setClassNames('form-control rounded-pill is-invalid') 
     } else {
-      setIsValid(true)
+      setValidation(true)
       setClassNames('form-control rounded-pill is-valid') 
     }
   };
@@ -24,7 +23,8 @@ const FormSelect = ({ label, title, value, setState }) => {
         <option value="In Progress">In Progress</option>
         <option value="Complete">Complete</option>
       </select>
-      {isValid ? <div className="valid-feedback"></div> : <div style={{marginLeft: '5px'}}className="invalid-feedback">Select option</div>}
+      <div className="valid-feedback"></div>
+      <div style={{marginLeft: '5px'}}className="invalid-feedback">Input must be more than 2 characters long.</div>
     </div>
   )
 }
