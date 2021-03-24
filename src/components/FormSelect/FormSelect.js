@@ -1,16 +1,30 @@
-import React from 'react'
+import React, {useState} from 'react';
 
-const FormSelect = ({ label, title, isValid }) => {
+const FormSelect = ({ label, title, value, setState }) => {
+  const [isValid, setIsValid] = useState(false);
+  const [classNames, setClassNames] = useState('form-control rounded-pill');
+
+  const handleChange = (e) => {
+    setState(e.target.value);
+    if(e.target.value === 'Choose Status') {
+      setIsValid(false)
+      setClassNames('form-control rounded-pill is-invalid') 
+    } else {
+      setIsValid(true)
+      setClassNames('form-control rounded-pill is-valid') 
+    }
+  };
+
   return (
     <div className="col mb-4">
       <label for={label} className="form-label fw-bold"> {title}: </label>
-      <select className="form-select rounded-pill">
+      <select className={classNames} value={value} onChange={handleChange}>
         <option selected>Choose Status</option>
         <option value="Pending">Pending</option>
         <option value="In Progress">In Progress</option>
         <option value="Complete">Complete</option>
       </select>
-      {isValid ? <div className="valid-feedback"></div> : <div className="invalid-feedback">Select option</div>}
+      {isValid ? <div className="valid-feedback"></div> : <div style={{marginLeft: '5px'}}className="invalid-feedback">Select option</div>}
     </div>
   )
 }
